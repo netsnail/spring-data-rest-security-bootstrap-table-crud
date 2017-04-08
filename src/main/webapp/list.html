@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<meta charset="utf-8">
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	    <meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>List</title>
+		<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+		<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table.min.css">
+		<script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+		<script src="//cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table.min.js"></script>
+		<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/locale/bootstrap-table-zh-CN.min.js"></script>
+		<style type="text/css">
+		.search,.toolbar { margin:5px 0; }
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<nav class="navbar navbar-default" role="navigation">
+			    <div class="container-fluid">
+			    <div class="navbar-header">
+			        <button type="button" class="navbar-toggle" data-toggle="collapse"
+			                data-target="#example-navbar-collapse">
+			            <span class="sr-only">Swith</span>
+			            <span class="icon-bar"></span>
+			            <span class="icon-bar"></span>
+			            <span class="icon-bar"></span>
+			        </button>
+			        <a class="navbar-brand" href="#">Home</a>
+			    </div>
+			    <div class="collapse navbar-collapse" id="example-navbar-collapse">
+			        <ul class="nav navbar-nav">
+			            <li><a href="#">One</a></li>
+			            <li class="dropdown">
+			                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+			                    Two <b class="caret"></b>
+			                </a>
+			                <ul class="dropdown-menu">
+			                    <li><a href="#">Test</a></li>
+			                    <li><a href="#">Test</a></li>
+			                    <li class="divider"></li>
+			                    <li><a href="#">Link</a></li>
+			                </ul>
+			            </li>
+			        </ul>
+			        <ul class="nav navbar-nav navbar-right">
+			            <li><a href="/login" target="_none">Login</a>
+			            <iframe name="_none" style="height:0;width:0;display:none;"></iframe>
+			            </li>
+			        </ul>
+			    </div>
+			    </div>
+			</nav>
+			<h1 class="text-center">List</h1>
+			<div class="search">
+				<form id="search-form" class="form-inline">
+				  <div class="form-group">
+				    <label for="name">Name</label>
+				    <input type="text" class="form-control" name="name" placeholder="New">
+				  </div>
+				  <div class="form-group">
+				    <label for="country">Country</label>
+				    <input type="text" class="form-control" name="country" placeholder="CA">
+				  </div>
+				  <button type="button" class="btn btn-default" id="search-button">Search</button>
+				</form>
+			</div>
+			<div class="toolbar text-right">
+				<button type="button" class="btn btn-primary" id="add-button">New</button>
+			</div>
+			<div id="table-msg" class="bg-danger"></div>
+			<table id="table"
+				data-search="false"
+				data-search-on-enter-key="true"
+				data-custom-search="false"
+				data-show-refresh="false"
+				data-show-toggle="false"
+				data-show-columns="false"
+				data-show-export="false"
+				data-detail-view="false"
+				data-minimum-count-columns="2"
+				data-show-pagination-switch="false"
+				data-page-size="7"
+				data-page-list="[10, 25, 50, 100, ALL]"
+				data-show-footer="false"
+              data-height="460"
+              data-pagination="true"
+              data-side-pagination="server"
+              data-query-params="query_params"
+				data-response-handler="response_handler"
+              	>
+              <thead>
+                <tr>
+                    <th data-field="name">Name</th>
+                    <th data-field="state">State</th>
+                    <th data-field="country">Country</th>
+                    <th data-field="map">Map</th>
+                    <th data-formatter="detail_formatter">Operate</th>
+                </tr>
+				</thead>
+			</table>
+			<!-- Modal -->
+			<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+			  <div class="modal-dialog" role="document">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			        <h4 class="modal-title" id="myModalLabel">Entity</h4>
+			      </div>
+			      <form id="edit-form">
+			      <div class="modal-body">
+			      	<p id="msg" class="bg-info"></p>
+					  <div class="form-group">
+					    <label for="name">Name</label>
+					    <input type="text" class="form-control" id="name" name="name" placeholder="Name">
+					  </div>
+					  <div class="form-group">
+					    <label for="state">State</label>
+					    <input type="text" class="form-control" id="state" name="state" placeholder="State">
+					  </div>
+					  <div class="form-group">
+					    <label for="country">Country</label>
+					    <input type="text" class="form-control" id="country" name="country" placeholder="Country">
+					  </div>
+					  <div class="form-group">
+					    <label for="map">Map</label>
+					    <input type="text" class="form-control" id="map" name="map" placeholder="Map">
+					  </div>
+			      </div>
+			      <div class="modal-footer">
+			        <button type="reset" class="btn">重置</button>
+			        <button type="button" class="btn btn-primary" id="form-submit">Submit</button>
+			        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			      </div>
+			      </form>
+			    </div>
+			  </div>
+			</div>
+		</div>
+		<script type="text/javascript">
+			var main_url="/items";
+			var search_url="/items/search/findByNameContainingAndCountryContainingAllIgnoringCase";
+			
+			$('#table').bootstrapTable({url:main_url});
+			
+			function response_handler (res) {
+				return { rows: (res._embedded ? res._embedded.items : []), total: res.page.totalElements };
+			}
+			function fill_form(data) {
+				var _form=$('#edit-form');
+				$('#name', _form).val(data.name);
+				$('#state', _form).val(data.state);
+				$('#country', _form).val(data.country);
+				$('#map', _form).val(data.map);
+			}
+			function query_params (params) {
+				console.log(params)
+				return { page: params.offset/params.limit, size: params.limit, sort: 'id,desc' };
+			}
+			$('#search-button').click(function() {
+				var params = $('#search-form').serialize();
+				var _url=search_url+'?'+params;
+				$('#table').bootstrapTable('refresh', { url: _url });
+			})
+			function detail_formatter (index, row) {
+				return "<button class=\"btn btn-primary\" onclick=\"_edit('"+row._links.self.href+"')\">Edit</button> "
+				+"<button class=\"btn btn-default\" onclick=\"_delete('"+row._links.self.href+"')\">Delete</button>"
+			}
+			// save
+			$('#add-button').click(function() {
+				$('#edit-form')[0].reset();
+				$('#myModal').modal(true)
+				$('#form-submit').unbind('click').bind('click', function() {
+					var json=$('#edit-form').serializeArray();
+					var _data = {};
+			        for (var item in json) {
+			        	_data[json[item].name] = json[item].value;
+			        }
+					$.ajax({
+					  type: 'POST',
+					  url: main_url,
+					  contentType: 'application/json',
+					  data: JSON.stringify(_data),
+					  dataType: 'json',
+					  success: function(data, textStatus, xhr) {
+					        if (xhr.status==201) data=xhr.getResponseHeader("location");
+					        _success("新增成功");
+					    },
+					    error: function(xhr, textStatus, ex) {
+					        if (xhr.status==201) { _success("新增成功"); return; }
+					        if (xhr.status==401) { 
+					        	$("#msg").removeClass().addClass('bg-danger').text('Unauthorized');
+					        	return; 
+					         }
+					        $("#msg").removeClass().addClass('bg-danger').text( textStatus + "," + ex + "," + xhr.responseText );
+					    }
+					})
+				});
+			})
+			function _edit (url) {
+				$.getJSON(url, function (data) {
+					fill_form(data);
+					$('#myModal').modal(true)
+					
+					$('#form-submit').unbind('click').bind('click', function() {
+						var json=$('#edit-form').serializeArray();
+						var _data = {};
+				        for (var item in json) {
+				        	_data[json[item].name] = json[item].value;
+				        }
+						$.ajax({
+						  type: 'PUT',
+						  url: url,
+						  username: 'admin', password: 'admin',
+						  contentType: 'application/json',
+						  data: JSON.stringify(_data),
+						  dataType: 'json',
+						  success: function(data, textStatus, xhr) {
+						        if (xhr.status==201) data=xhr.getResponseHeader("location");
+						        _success("更新成功");
+						    },
+						    error: function(xhr, textStatus, ex) {
+						        if (xhr.status==201) { _success("更新成功"); return; }
+						        if (xhr.status==401) { 
+						        	$("#msg").removeClass().addClass('bg-danger').text('Unauthorized');
+						        	return; 
+						         }
+						        $("#msg").removeClass().addClass('bg-danger').text(textStatus + "," + ex + "," + xhr.responseText);
+						    }
+						})
+					})
+				});
+			}
+			function _delete (url) {
+				$.ajax({
+					  type: 'DELETE',
+					  url: url,
+					  dataType: 'json',
+					  success: function(data, textStatus, xhr) {
+					        if (xhr.status==204) data=xhr.getResponseHeader("location");
+					        _success("删除成功"); 
+					    },
+					    error: function(xhr, textStatus, ex) {
+					        if (xhr.status==204) { return; }
+					        if (xhr.status==401) { 
+					        	$('#table-msg').removeClass().addClass('bg-danger').text('Unauthorized')
+					        	return; 
+					         }
+					        $('#table-msg').removeClass().addClass('bg-danger').text('Delete failed')
+					    }
+					})
+			}
+			function _success(msg) {
+				$('#myModal').modal('hide');
+				$('#edit-form')[0].reset();
+				$("#table").bootstrapTable('refresh');
+				$('#table-msg').show().html(" "+msg).delay(3000).fadeOut();
+			}
+		</script>
+	</body>
+</html>
