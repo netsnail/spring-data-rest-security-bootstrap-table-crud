@@ -11,10 +11,9 @@
 		<script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
 		<script src="//cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 		<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table.min.js"></script>
+		<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table.min.js"></script>
 		<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/locale/bootstrap-table-zh-CN.min.js"></script>
-		<style type="text/css">
-		.search,.toolbar { margin:5px 0; }
-		</style>
+		<style type="text/css">.search,.toolbar { margin:5px 0; }</style>
 	</head>
 	<body>
 		<div class="container">
@@ -143,7 +142,7 @@
 			var main_url="/items";
 			var search_url="/items/search/findByNameContainingAndCountryContainingAllIgnoringCase";
 			
-			$('#table').bootstrapTable({ url: main_url });
+			var _bootstrapTable=$('#table').bootstrapTable({ url: main_url });
 			
 			function response_handler (res) {
 				return { rows: (res._embedded ? res._embedded.items : []), total: res.page.totalElements };
@@ -158,10 +157,10 @@
 			function query_params (params) {
 				return { page: params.offset/params.limit, size: params.limit, sort: 'id,desc' };
 			}
-			$('#search-button').click(function() {
-				var params = $('#search-form').serialize();
-				var _url=search_url+'?'+params;
-				$('#table').bootstrapTable('refresh', { url: _url });
+			$('#search-button').click(function () {
+				var params=$('#search-form').serialize();
+				_bootstrapTable.data('bootstrap.table').options.url=search_url+'?'+params;
+				_bootstrapTable.bootstrapTable('refresh');
 			})
 			function detail_formatter (index, row) {
 				return "<button class=\"btn btn-primary\" onclick=\"_edit('"+row._links.self.href+"')\">Edit</button> "
