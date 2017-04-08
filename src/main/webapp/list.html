@@ -68,7 +68,7 @@
 				</form>
 			</div>
 			<div class="toolbar text-right">
-				<button type="button" class="btn btn-primary" id="add-button">New</button>
+				<button type="button" class="btn btn-primary" id="add-button">Create</button>
 			</div>
 			<div id="table-msg" class="bg-danger"></div>
 			<table id="table"
@@ -143,20 +143,19 @@
 			var main_url="/items";
 			var search_url="/items/search/findByNameContainingAndCountryContainingAllIgnoringCase";
 			
-			$('#table').bootstrapTable({url:main_url});
+			$('#table').bootstrapTable({ url: main_url });
 			
 			function response_handler (res) {
 				return { rows: (res._embedded ? res._embedded.items : []), total: res.page.totalElements };
 			}
 			function fill_form(data) {
 				var _form=$('#edit-form');
+				$('#map', _form).val(data.map);
 				$('#name', _form).val(data.name);
 				$('#state', _form).val(data.state);
 				$('#country', _form).val(data.country);
-				$('#map', _form).val(data.map);
 			}
 			function query_params (params) {
-				console.log(params)
 				return { page: params.offset/params.limit, size: params.limit, sort: 'id,desc' };
 			}
 			$('#search-button').click(function() {
@@ -194,7 +193,7 @@
 					        	$("#msg").removeClass().addClass('bg-danger').text('Unauthorized');
 					        	return; 
 					         }
-					        $("#msg").removeClass().addClass('bg-danger').text( textStatus + "," + ex + "," + xhr.responseText );
+					        $("#msg").removeClass().addClass('bg-danger').text(textStatus + "," + ex + "," + xhr.responseText);
 					    }
 					})
 				});
@@ -203,7 +202,6 @@
 				$.getJSON(url, function (data) {
 					fill_form(data);
 					$('#myModal').modal(true)
-					
 					$('#form-submit').unbind('click').bind('click', function() {
 						var json=$('#edit-form').serializeArray();
 						var _data = {};
@@ -213,7 +211,6 @@
 						$.ajax({
 						  type: 'PUT',
 						  url: url,
-						  username: 'admin', password: 'admin',
 						  contentType: 'application/json',
 						  data: JSON.stringify(_data),
 						  dataType: 'json',
