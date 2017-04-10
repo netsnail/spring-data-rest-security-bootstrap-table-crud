@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>Map</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+<script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="//code.highcharts.com/maps/highmaps.js"></script>
+<style>
+html, body {
+	margin: 0;
+	padding: 0;
+	height: 100%;
+}
+</style>
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<div id="view1" class="col-md-6" style="height: 500px;"></div>
+			<div id="view2" class="col-md-6" style="height: 500px;"></div>
+		</div>
+	</div>
+	<script type="text/javascript">
+		$(function() {
+			$.getJSON('/items/groupby/province', function (data) {
+			var _data=[]
+				for (var item in data) {
+					var key=data[item][0],val=data[item][1];
+					_data.push({name:key,value:val})
+				}
+				var mapArray = Highcharts.maps['cn-with-city'];
+	            $('#view1')
+	                    .highcharts(
+	                            'Map',
+	                            {
+	                                title : {
+	                                    text : ''
+	                                },
+	                                plotOptions : {
+	                                    series : {
+	                                        showInLegend : false
+	                                    }
+	                                },
+	                                series : [
+	                                        {
+	                                            name : '省份',
+	                                            data : _data,
+	                                            mapData : mapArray,
+	                                            joinBy : [ 'name' ],
+	                                            events : {
+	                                                click : function(e) {
+	                                                    window.frames['viewer'].window.location.href = '/items/search/findByProvince?page=0&size=7&sort=id,desc&province='+e.point.name;
+	                                                }
+	                                            },
+	                                        }, ]
+	                            }, function(map) {
+	                            });
+			})
+			
+$.getJSON('/items/groupby/category', function (data) {
+            var keys=[],values=[]
+                for (var item in data) {
+                    var key=data[item][0],val=data[item][1];
+                    keys.push(key);values.push(val);
+                }
+            
+			$('#view2').highcharts(
+					{
+						title : '',
+						chart : {
+							type : 'column',
+						},
+
+						plotOptions : {
+							series : {
+								showInLegend : false
+							}
+						},
+						xAxis : {
+							categories : keys,
+							crosshair : true
+						},
+						yAxis : {
+							min : 0,
+							title : {
+								text : '数量'
+							}
+						},
+						series : [
+								{
+									type : 'column',
+									name : '分类',
+									data : values,
+									events : {
+										click : function(e) {
+											window.frames['viewer'].window.location.href = '/items/search/findByCategory?page=0&size=7&sort=id,desc&category='+e.point.category;
+										},
+									},
+								}, ]
+					});
+});
+		});
+	</script>
+	<script src="//img.hcharts.cn/mapdata/cn-with-citys.js"></script>
+	<iframe name="viewer"
+		style="width: 100%; border: 0; overflow: scroll; height: 100%;"></iframe>
+</body>
+</html>

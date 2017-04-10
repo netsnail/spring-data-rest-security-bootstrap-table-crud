@@ -32,8 +32,11 @@ import org.springframework.security.access.prepost.PreAuthorize;
 @RepositoryRestResource(collectionResourceRel = "items", path = "items")
 public interface ItemRepository extends PagingAndSortingRepository<Item, Long> {
 
-	Page<Item> findByNameContainingAndCountryContainingAllIgnoringCase(@Param("name") String name,
-		@Param("country") String country, Pageable pageable);
+	Page<Item> findByProvince(@Param("province") String province, Pageable pageable);
+	Page<Item> findByCategory(@Param("category") String category, Pageable pageable);
+	
+	Page<Item> findByProductNameContainingOrCompanyContaining(@Param("keyword") String category,
+			@Param("keyword") String province, Pageable pageable);
 
 	@Override
 	@PreAuthorize("hasRole('ROLE_ADMIN')")

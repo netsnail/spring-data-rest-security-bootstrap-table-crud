@@ -56,12 +56,8 @@
 			<div class="search">
 				<form id="search-form" class="form-inline">
 				  <div class="form-group">
-				    <label for="name">Name</label>
-				    <input type="text" class="form-control" name="name" placeholder="New">
-				  </div>
-				  <div class="form-group">
-				    <label for="country">Country</label>
-				    <input type="text" class="form-control" name="country" placeholder="CA">
+				    <label for="keyword">关键词</label>
+				    <input type="text" class="form-control" name="keyword" placeholder="产品或公司名称">
 				  </div>
 				  <button type="button" class="btn btn-default" id="search-button">Search</button>
 				</form>
@@ -92,11 +88,14 @@
               	>
               <thead>
                 <tr>
-                    <th data-field="name">Name</th>
-                    <th data-field="state">State</th>
-                    <th data-field="country">Country</th>
-                    <th data-field="map">Map</th>
-                    <th data-formatter="detail_formatter">Operate</th>
+                    <th data-field="productName">产品名称</th>
+                    <th data-field="opType">类别</th>
+                    <th data-field="province">地区</th>
+                    <th data-field="category">品类</th>
+                    <th data-field="company">申报单位</th>
+                    <th data-field="approveDate">获批日期</th>
+                    <th data-field="zongjuNo">质检总局公告</th>
+                    <th data-formatter="detail_formatter">操作</th>
                 </tr>
 				</thead>
 			</table>
@@ -106,32 +105,44 @@
 			    <div class="modal-content">
 			      <div class="modal-header">
 			        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			        <h4 class="modal-title" id="myModalLabel">Entity</h4>
+			        <h4 class="modal-title" id="myModalLabel">Peop产品</h4>
 			      </div>
 			      <form id="edit-form">
 			      <div class="modal-body">
 			      	<p id="msg" class="bg-info"></p>
 					  <div class="form-group">
-					    <label for="name">Name</label>
-					    <input type="text" class="form-control" id="name" name="name" placeholder="Name">
+					    <label for="productName">产品名称</label>
+					    <input type="text" class="form-control" id="productName" name="productName" placeholder="产品名称">
 					  </div>
 					  <div class="form-group">
-					    <label for="state">State</label>
-					    <input type="text" class="form-control" id="state" name="state" placeholder="State">
+					    <label for="opType">类别</label>
+					    <input type="text" class="form-control" id="opType" name="opType" placeholder="类别">
 					  </div>
 					  <div class="form-group">
-					    <label for="country">Country</label>
-					    <input type="text" class="form-control" id="country" name="country" placeholder="Country">
+					    <label for="province">地区</label>
+					    <input type="text" class="form-control" id="province" name="province" placeholder="地区">
 					  </div>
 					  <div class="form-group">
-					    <label for="map">Map</label>
-					    <input type="text" class="form-control" id="map" name="map" placeholder="Map">
+					    <label for="category">品类</label>
+					    <input type="text" class="form-control" id="category" name="category" placeholder="品类">
+					  </div>
+					  <div class="form-group">
+					    <label for="company">申报单位</label>
+					    <input type="text" class="form-control" id="company" name="company" placeholder="申报单位">
+					  </div>
+					  <div class="form-group">
+					    <label for="approveDate">获批日期</label>
+					    <input type="date" class="form-control" id="approveDate" name="approveDate" placeholder="获批日期">
+					  </div>
+					  <div class="form-group">
+					    <label for="zongjuNo">质检总局公告</label>
+					    <input type="text" class="form-control" id="zongjuNo" name="zongjuNo" placeholder="质检总局公告">
 					  </div>
 			      </div>
 			      <div class="modal-footer">
 			        <button type="reset" class="btn">重置</button>
-			        <button type="button" class="btn btn-primary" id="form-submit">Submit</button>
-			        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			        <button type="button" class="btn btn-primary" id="form-submit">提交</button>
+			        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
 			      </div>
 			      </form>
 			    </div>
@@ -140,7 +151,7 @@
 		</div>
 		<script type="text/javascript">
 			var main_url="/items";
-			var search_url="/items/search/findByNameContainingAndCountryContainingAllIgnoringCase";
+			var search_url="/items/search/findByProductNameContainingOrCompanyContaining";
 			
 			var _bootstrapTable=$('#table').bootstrapTable({ url: main_url });
 			
@@ -149,10 +160,13 @@
 			}
 			function fill_form(data) {
 				var _form=$('#edit-form');
-				$('#map', _form).val(data.map);
-				$('#name', _form).val(data.name);
-				$('#state', _form).val(data.state);
-				$('#country', _form).val(data.country);
+				$('#productName', _form).val(data.productName);
+				$('#opType', _form).val(data.opType);
+				$('#category', _form).val(data.category);
+				$('#province', _form).val(data.province);
+				$('#company', _form).val(data.company);
+				$('#approveDate', _form).val(data.approveDate);
+				$('#zongjuNo', _form).val(data.zongjuNo);
 			}
 			function query_params (params) {
 				return { page: params.offset/params.limit, size: params.limit, sort: 'id,desc' };

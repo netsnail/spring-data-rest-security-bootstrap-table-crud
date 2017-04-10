@@ -27,7 +27,6 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.context.SecurityContextHolder;
 
 /**
  * This example shows various ways to secure Spring Data REST applications using Spring Security
@@ -38,7 +37,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 public class Application {
 
 	@Autowired ItemRepository itemRepository;
-	@Autowired EmployeeRepository employeeRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class);
@@ -48,21 +46,6 @@ public class Application {
 	 * Pre-load the system with employees and items.
 	 */
 	public @PostConstruct void init() {
-
-		employeeRepository.save(new Employee("Bilbo", "Baggins", "thief"));
-		employeeRepository.save(new Employee("Frodo", "Baggins", "ring bearer"));
-		employeeRepository.save(new Employee("Gandalf", "the Wizard", "servant of the Secret Fire"));
-
-		/**
-		 * Due to method-level protections on {@link example.company.ItemRepository}, the security context must be loaded
-		 * with an authentication token containing the necessary privileges.
-		 */
-		SecurityUtils.runAs("system", "system", "ROLE_ADMIN");
-
-		for (int i=0; i<30; i++)
-		itemRepository.save(new Item("test"+i, "BJ", "CN", "-27.470933, 153.023502"));
-
-		SecurityContextHolder.clearContext();
 	}
 
 	/**
@@ -87,8 +70,8 @@ public class Application {
 		protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 
 			auth.inMemoryAuthentication().//
-					withUser("greg").password("turnquist").roles("USER").and().//
-					withUser("ollie").password("gierke").roles("USER", "ADMIN");
+					withUser("user").password("user").roles("USER").and().//
+					withUser("admin").password("admin").roles("USER", "ADMIN");
 		}
 
 		/**
@@ -110,9 +93,7 @@ public class Application {
 
 			http.httpBasic().and().authorizeRequests().//
 					antMatchers(HttpMethod.GET, "/login").hasRole("ADMIN").//
-					antMatchers(HttpMethod.POST, "/employees").hasRole("ADMIN").
-					antMatchers(HttpMethod.PUT, "/employees/**").hasRole("ADMIN").and().//
-					csrf().disable();
+					and().csrf().disable();
 		}
 	}
 }
