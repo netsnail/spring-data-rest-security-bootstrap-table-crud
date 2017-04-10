@@ -58,7 +58,7 @@ public class Application {
 		@Override
 		protected void configure(HttpSecurity http) throws Exception {
 			http.httpBasic().and().authorizeRequests().
-					antMatchers(HttpMethod.GET, "/login").hasRole("ADMIN").
+					antMatchers(HttpMethod.GET, "/items/login").hasRole("ADMIN").
 					and().csrf().disable();
 		}
 	}
