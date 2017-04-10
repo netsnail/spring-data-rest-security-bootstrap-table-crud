@@ -119,7 +119,7 @@
                     var mapArray = Highcharts.maps['cn-with-city'];
                     $('#view1').highcharts('Map',{ title : { text : '' },
                                         plotOptions : { series : { showInLegend : false } },
-                                        series : [ { name : '数量', data : _data, mapData : mapArray, joinBy : [ 'name' ],
+                                        series : [ { name : '数量', data : _data, mapData : mapArray, joinBy : [ 'name' ], dataLabels: { enabled: true, format: '{point.value}' },
                                                     events : {
                                                         click : function(e) {
                                                             _bootstrapTable.data('bootstrap.table').options.url=search_province+'?province='+e.point.name;
