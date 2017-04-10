@@ -18,9 +18,11 @@ package example.springdata.rest.security;
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -29,9 +31,11 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
 @SpringBootApplication
+@PropertySource("classpath:application.properties")
 public class Application {
 
 	@Autowired ItemRepository itemRepository;
+	@Value("${user.login}")	String userLogin;
 
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class);
@@ -43,19 +47,16 @@ public class Application {
 	@Configuration
 	@EnableGlobalMethodSecurity(prePostEnabled = true)
 	@EnableWebSecurity
-	static class SecurityConfiguration extends WebSecurityConfigurerAdapter {
-
+	class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		@Override
 		protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-
+			String[] strs = userLogin.split(":");
 			auth.inMemoryAuthentication().
-					withUser("user").password("user").roles("USER").and().
-					withUser("admin").password("admin").roles("USER", "ADMIN");
+					withUser(strs[0]).password(strs[1]).roles("USER", "ADMIN");
 		}
 
 		@Override
 		protected void configure(HttpSecurity http) throws Exception {
-
 			http.httpBasic().and().authorizeRequests().
 					antMatchers(HttpMethod.GET, "/login").hasRole("ADMIN").
 					and().csrf().disable();
