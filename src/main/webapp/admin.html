@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 	    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	    <meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>Peop产品列表</title>
+		<title>产品列表</title>
 		<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
 		<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
 		<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table.min.css">
@@ -54,7 +54,7 @@
 			    </div>
 			    </div>
 			</nav>
-			<h1 class="text-center">Peop产品列表</h1>
+			<h1 class="text-center">产品列表</h1>
 			<div class="row">
             <div id="view1" class="col-md-6" style="height: 500px;"></div>
             <div id="view2" class="col-md-6" style="height: 500px;"></div>
@@ -111,7 +111,7 @@
 			    <div class="modal-content">
 			      <div class="modal-header">
 			        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			        <h4 class="modal-title" id="myModalLabel">Peop产品</h4>
+			        <h4 class="modal-title" id="myModalLabel">产品信息</h4>
 			      </div>
 			      <form id="edit-form">
 			      <div class="modal-body">
@@ -122,15 +122,72 @@
 					  </div>
 					  <div class="form-group">
 					    <label for="opType">类别</label>
-					    <input type="text" class="form-control" id="opType" name="opType" placeholder="类别">
+					    <select class="form-control" id="opType" name="opType">
+                           <option>初评</option>
+                            <option>复评</option>
+                        </select>
 					  </div>
 					  <div class="form-group">
 					    <label for="province">地区</label>
-					    <input type="text" class="form-control" id="province" name="province" placeholder="地区">
+					    <select class="form-control" id="province" name="province">
+					       <option>上海</option>
+							<option>云南</option>
+							<option>内蒙古</option>
+							<option>北京</option>
+							<option>吉林</option>
+							<option>四川</option>
+							<option>天津</option>
+							<option>宁夏</option>
+							<option>宁波</option>
+							<option>安徽</option>
+							<option>山东</option>
+							<option>山西</option>
+							<option>广东</option>
+							<option>广西</option>
+							<option>新疆</option>
+							<option>江苏</option>
+							<option>江西</option>
+							<option>河北</option>
+							<option>河南</option>
+							<option>浙江</option>
+							<option>深圳</option>
+							<option>湖北</option>
+							<option>湖南</option>
+							<option>甘肃</option>
+							<option>福建</option>
+							<option>西藏</option>
+							<option>贵州</option>
+							<option>辽宁</option>
+							<option>重庆</option>
+							<option>陕西</option>
+							<option>青海</option>
+							<option>黑龙江</option>
+							<option>海南</option>
+							<option>台湾</option>
+					    </select>
 					  </div>
 					  <div class="form-group">
 					    <label for="category">品类</label>
-					    <input type="text" class="form-control" id="category" name="category" placeholder="品类">
+					    <select class="form-control" id="category" name="category">
+						    <option>中药材</option>
+							<option>乳制品</option>
+							<option>保健品</option>
+							<option>农副产品</option>
+							<option>工业品</option>
+							<option>文化产品</option>
+							<option>植物</option>
+							<option>水产品及制品</option>
+							<option>禽畜肉及制品</option>
+							<option>竹木制品</option>
+							<option>粮食</option>
+							<option>纺织品</option>
+							<option>茶叶</option>
+							<option>蔬菜水果</option>
+							<option>酒类</option>
+							<option>食用菌</option>
+							<option>饮料</option>
+							<option>饲料</option>
+					    </select>
 					  </div>
 					  <div class="form-group">
 					    <label for="company">申报单位</label>
