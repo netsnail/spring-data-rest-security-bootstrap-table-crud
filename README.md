@@ -1,1 +1,1 @@
-spring-boot @RepositoryRestResource spring-security bootstrap-table crud demo
+spring-boot @RepositoryRestResource spring-security bootstrap-table crud singlepage demo
