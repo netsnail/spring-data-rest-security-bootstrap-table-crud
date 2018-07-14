@@ -5,16 +5,15 @@
 	    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	    <meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>产品列表</title>
-		<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
-		<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
-		<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table.min.css">
-		<script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
-		<script src="//cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-		<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table.min.js"></script>
-		<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table.min.js"></script>
-		<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/locale/bootstrap-table-zh-CN.min.js"></script>
-		<script src="//code.highcharts.com/maps/highmaps.js"></script>
-		<script src="//img.hcharts.cn/mapdata/cn-with-citys.js"></script>
+		<link rel="stylesheet" href="assets/bootstrap.min.css">
+		<link rel="stylesheet" href="assets/bootstrap-theme.min.css">
+		<link rel="stylesheet" href="assets/bootstrap-table.min.css">
+		<script src="assets/jquery.min.js"></script>
+		<script src="assets/bootstrap.min.js"></script>
+		<script src="assets/bootstrap-table.min.js"></script>
+		<script src="assets/bootstrap-table-zh-CN.min.js"></script>
+		<script src="assets/highmaps.js"></script>
+		<script src="assets/cn-with-citys.js"></script>
 		<style type="text/css">.search,.toolbar { margin:5px 0; }</style>
 	</head>
 	<body>
@@ -344,15 +343,7 @@
                         _data.push({name:key,value:val})
                     }
                     var mapArray = Highcharts.maps['cn-with-city'];
-                    $('#view1').highcharts('Map',{ title : { text : '' },
-                                        plotOptions : { series : { showInLegend : false } },
-                                        series : [ { name : '数量', data : _data, mapData : mapArray, joinBy : [ 'name' ], dataLabels: { enabled: true, format: '{point.value}' },
-                                                    events : {
-                                                        click : function(e) {
-                                                            _bootstrapTable.data('bootstrap.table').options.url=search_province+'?province='+e.point.name;
-                                                            _bootstrapTable.bootstrapTable('refresh');
-                                                        }
-                                                    }, }, ] }, function(map) { });
+
                 })
             
           $.getJSON('/items/groupby/category', function (data) {
@@ -361,17 +352,7 @@
                     var key=data[item][0],val=data[item][1];
                     keys.push(key);values.push(val);
                 }
-                $('#view2').highcharts( { title : '', chart : { type : 'column', },
-                            plotOptions : { series : { showInLegend : false } },
-                            xAxis : { categories : keys, crosshair : true },
-                            yAxis : { min : 0, title : { text : '数量' } },
-                            series : [ { type : 'column', name : '数量', data : values,
-                                        events : {
-                                            click : function(e) {
-                                                _bootstrapTable.data('bootstrap.table').options.url=search_category+'?category='+e.point.category;
-                                                _bootstrapTable.bootstrapTable('refresh');
-                                            },
-                                        }, }, ] });
+
          });
 
             });
